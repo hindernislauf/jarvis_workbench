@@ -13,19 +13,19 @@
 이 프로젝트를 실행하기 위해서는 Python 3.7 이상이 필요합니다.
 
 1. 가상 환경 생성 및 활성화:
-'''python3 -m venv jarvis
-source jarvis/bin/activate'''
+python3 -m venv jarvis
+source jarvis/bin/activate
 
 2. 필요한 패키지 설치:
-'''pip install -r requirements.txt'''
+pip install -r requirements.txt
 
 ## 실행 방법
 
 1. 가상 환경 활성화:
-'''source jarvis/bin/activate'''
+source jarvis/bin/activate
 
 2. 스크립트 실행:
-'''python handtracking.py'''
+python handtracking.py
 
 ## 주의사항
 
