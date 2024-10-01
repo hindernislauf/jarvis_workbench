@@ -1,4 +1,4 @@
-# jarvis_workbench
+# Jarvis Workbench
 
 이 프로젝트의 목적은 설계, 디자인, 창작 활동 및 DIY 수리를 위한 인공지능 워크벤치를 만들기 위해 시작되었습니다. <br/><br/>
 기능의 특정 부분까지는 해외 크리에이터 Concenpt Bytes의 유료 강의를 통해 만들어졌습니다. <br/><br/>
