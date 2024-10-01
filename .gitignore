@@ -2,3 +2,6 @@ jarvis/
 *.pyc
 __pycache__/
 .DS_Store
+.vscode/
+*.log
+.env
