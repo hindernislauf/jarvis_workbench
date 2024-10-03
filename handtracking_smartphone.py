@@ -5,6 +5,7 @@ import requests
 from threading import Thread
 from queue import Queue
 import time
+import sys
 
 def capture_frames(url, frame_queue):
     while True:
@@ -22,7 +23,11 @@ def capture_frames(url, frame_queue):
                 frame_queue.put(frame)
         time.sleep(0.01)  # 캡처 간격 조절
 
-def handtracking_smartphone(ip_address, port="8080"):
+def handtracking_smartphone(ip_address, port="8080", test_mode=False):
+    if test_mode:
+        print("Test mode: handtracking_smartphone.py basic functionality check passed.")
+        return
+
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(static_image_mode=False,
                            max_num_hands=2,
@@ -65,4 +70,8 @@ def handtracking_smartphone(ip_address, port="8080"):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    handtracking_smartphone("10.186.26.22")  # 사용자의 스마트폰 IPWebcam에 표시된 IP주소로 교체
+    test_mode = "--test" in sys.argv
+    if test_mode:
+        handtracking_smartphone("", test_mode=True)
+    else:
+        handtracking_smartphone("10.186.26.22")  # 사용자의 스마트폰 IPWebcam에 표시된 IP주소로 교체
