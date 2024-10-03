@@ -69,7 +69,7 @@ while True:
             if distance < 0.1 and mouseDown == False:
                 # mouse down
                 pag.mouseDown()
-                mouseDown = True                
+                mouseDown = True
             
             if distance > 0.3 and mouseDown == True:
                 # mouse up
@@ -78,19 +78,18 @@ while True:
                 
             if mouseDown:
                 # draw a circle at the midpoint with radius 10
-                cv2.circle(frame, (int(midpoint_x * frame_width), int(midpoint_y * frame_height), 10, (0, 255, 0), -1)
+                cv2.circle(frame, (int(midpoint_x * frame_width), int(midpoint_y * frame_height), 10, (0, 255, 0), -1))
             
             else:
                 # draw a circle at the midpoint with radius 10
-                cv2.circle(frame, (int(midpoint_x * frame_width), int(midpoint_y * frame_height), 10, (0, 255, 0), 1)
+                cv2.circle(frame, (int(midpoint_x * frame_width), int(midpoint_y * frame_height), 10, (0, 255, 0), 1))
             
+            # Map the position to the screen resolution
+            x_mapped = np.interp(midpoint_x, (0, 1), (0, screen_width))
+            y_mapped = np.interp(midpoint_y, (0, 1), (0, screen_height))
             
-    # Draw the hand annotations on the frame.
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            # Drawlandmarks
-            
-            mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+        # Set the mouse position
+        pag.moveTo(x_mapped, y_mapped, duration = 0.1)
             
     # Display the resulting frame
     cv2.imshow("Medipipe Hands", frame)

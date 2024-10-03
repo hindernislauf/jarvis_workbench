@@ -18,6 +18,7 @@ source jarvis/bin/activate
 
 2. 필요한 패키지 설치:
 pip install -r requirements.txt
+(handtracking_mouse.py에서 pip install pyautogui 반영 필요)
 
 ## 실행 방법
 
