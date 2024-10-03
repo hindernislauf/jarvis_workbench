@@ -5,7 +5,6 @@ import requests
 from threading import Thread
 from queue import Queue
 import time
-import sys
 
 def capture_frames(url, frame_queue):
     while True:
@@ -13,21 +12,17 @@ def capture_frames(url, frame_queue):
         img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8)
         frame = cv2.imdecode(img_arr, -1)
         if frame is not None:
-            if frame_queue.qsize() < 2:  # 버퍼 크기 제한
+            if frame_queue.qsize() < 2:
                 frame_queue.put(frame)
             else:
                 try:
-                    frame_queue.get_nowait()  # 오래된 프레임 제거
+                    frame_queue.get_nowait()
                 except Queue.Empty:
                     pass
                 frame_queue.put(frame)
-        time.sleep(0.01)  # 캡처 간격 조절
+        time.sleep(0.01)
 
-def handtracking_smartphone(ip_address, port="8080", test_mode=False):
-    if test_mode:
-        print("Test mode: handtracking_smartphone.py basic functionality check passed.")
-        return
-
+def main(ip_address="10.186.26.22", port="8080"):
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(static_image_mode=False,
                            max_num_hands=2,
@@ -38,7 +33,6 @@ def handtracking_smartphone(ip_address, port="8080", test_mode=False):
     url = f"http://{ip_address}:{port}/shot.jpg"
     frame_queue = Queue(maxsize=2)
     
-    # 프레임 캡처 스레드 시작
     capture_thread = Thread(target=capture_frames, args=(url, frame_queue))
     capture_thread.daemon = True
     capture_thread.start()
@@ -49,12 +43,10 @@ def handtracking_smartphone(ip_address, port="8080", test_mode=False):
             frame = frame_queue.get()
             frame_count += 1
 
-            if frame_count % 2 == 0:  # 프레임 스킵
+            if frame_count % 2 == 0:
                 continue
 
-            # 프레임 크기 조정
             frame = cv2.resize(frame, (640, 480))
-            
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = hands.process(rgb_frame)
             
@@ -70,8 +62,4 @@ def handtracking_smartphone(ip_address, port="8080", test_mode=False):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    test_mode = "--test" in sys.argv
-    if test_mode:
-        handtracking_smartphone("", test_mode=True)
-    else:
-        handtracking_smartphone("10.186.26.22")  # 사용자의 스마트폰 IPWebcam에 표시된 IP주소로 교체
+    main()
