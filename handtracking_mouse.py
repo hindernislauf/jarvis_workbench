@@ -40,7 +40,7 @@ while True:
         break
     
     # Flip the frame horizontally 
-    frame = cv2.flip(frame, 1)
+    # frame = cv2.flip(frame, 1)
 
     # Convert the frame color from BGR to RGB
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
